@@ -132,6 +132,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public void onResume() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sp.registerOnSharedPreferenceChangeListener(this);
+        SunshineSyncAdapter.syncImmediately(getActivity());
         super.onResume();
         //mGoogleApiClient.connect();
     }

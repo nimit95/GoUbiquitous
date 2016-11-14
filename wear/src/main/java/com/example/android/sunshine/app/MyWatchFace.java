@@ -235,6 +235,10 @@ public class MyWatchFace extends CanvasWatchFaceService{
             boolean isRound = insets.isRound();
             mXOffset = resources.getDimension(isRound
                     ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
+            mYOffset= resources.getDimension(!isRound
+                    ? R.dimen.digital_y_offset : R.dimen.digital_y_offset_round);
+            mYdateoffset=resources.getDimension(!isRound
+                    ? R.dimen.date_y_offset : R.dimen.date_y_offset_round);
             float textSize = resources.getDimension(isRound
                     ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
             float dateSize = resources.getDimension(isRound
