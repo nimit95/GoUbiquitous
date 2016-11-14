@@ -191,12 +191,17 @@ public class MyWatchFace extends CanvasWatchFaceService{
 
             if (visible) {
                 registerReceiver();
-
+                mGoogleApiClient.connect();
+                Wearable.DataApi.addListener(mGoogleApiClient, this);
+                Wearable.MessageApi.addListener(mGoogleApiClient, this);
                 // Update time zone in case it changed while we weren't visible.
                 mCalendar.setTimeZone(TimeZone.getDefault());
                 invalidate();
             } else {
                 unregisterReceiver();
+                Wearable.DataApi.removeListener(mGoogleApiClient, this);
+                Wearable.MessageApi.removeListener(mGoogleApiClient, this);
+                mGoogleApiClient.disconnect();
             }
 
             // Whether the timer should be running depends on whether we're visible (as well as
@@ -297,7 +302,8 @@ public class MyWatchFace extends CanvasWatchFaceService{
             else {
                 canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
                 canvas.drawText(date, mXOffset, mYdateoffset, mDatePaint);
-                canvas.drawBitmap(image, bounds.width() / 4, bounds.height() / ((float) 1.5), null);
+
+                canvas.drawBitmap(image, (bounds.width()/2-image.getWidth()), bounds.height() / ((float) 1.65), null);
                 canvas.drawText(temp, bounds.width() / 2, bounds.height() / ((float) 1.35), mTempPaint);
                 canvas.drawText(templow, bounds.width() / 2, bounds.height() / ((float) 1.20), mTempPaint);
             }
@@ -420,9 +426,12 @@ public class MyWatchFace extends CanvasWatchFaceService{
         public void onMessageReceived(MessageEvent messageEvent) {
             Log.d("recieveing","recievinggmessage");
             if(messageEvent.getPath().equals(TEMP_HIGH_LOW)){
+                String suffix="\u00B0";
                 String data=new String(messageEvent.getData(), Charset.defaultCharset());
-                StringTokenizer s = new StringTokenizer(data);
-                templow=data;
+                StringTokenizer s = new StringTokenizer(data," ");
+                temp= "MAX "+s.nextToken();
+                templow="MIN "+s.nextToken();
+              //  templow=data;
                 invalidate();
             }
         }

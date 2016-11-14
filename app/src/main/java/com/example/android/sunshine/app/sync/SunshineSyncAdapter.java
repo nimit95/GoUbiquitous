@@ -412,10 +412,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter implements
     private void updateWatch() {
         mGoogleApiClient.connect();
 
-        //Wearable.DataApi.removeListener(mGoogleApiClient, this);
-       // Wearable.MessageApi.removeListener(mGoogleApiClient, this);
-        //Wearable.CapabilityApi.removeListener(mGoogleApiClient, this);
-       // mGoogleApiClient.disconnect();
+
     }
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -442,10 +439,11 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter implements
             double low = cursor.getDouble(INDEX_MIN_TEMP);
             String desc = cursor.getString(INDEX_SHORT_DESC);
             Bitmap mImageBitmap = BitmapFactory.decodeResource(context.getResources(), defaultImage);
-            String contentText = String.format(context.getString(R.string.format_notification),
+            /*String contentText = String.format(context.getString(R.string.format_notification),
                     desc,
                     Utility.formatTemperature(context, high),
-                    Utility.formatTemperature(context, low));
+                    Utility.formatTemperature(context, low));*/
+            String contentText=Utility.formatTemperature(context, high) + " " + Utility.formatTemperature(context, low);
             if (null != mImageBitmap && mGoogleApiClient.isConnected()) {
                 Log.d("sending","sending");
                 sendPhoto(toAsset(mImageBitmap));
@@ -520,7 +518,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter implements
                                 .isSuccess());
                     }
                 });
-        Log.d("ff","ff");
+        //Log.d("ff","ff");
     }
     private static void LOGD(final String tag, String message) {
         if (Log.isLoggable(tag, Log.DEBUG)) {
