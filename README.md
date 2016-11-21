@@ -1,7 +1,7 @@
 Advanced Android Sample App
 ===================================
 
-Synchronizes weather information from OpenWeatherMap on Android Phones and Tablets. Used in the Udacity Advanced Android course.
+Synchronizes weather information from OpenWeatherMap on Android Phones and Tablets. Used in the Udacity Advanced Android course. Updagraded this project to work on Android Watch. Created a watchface to show time, current weather conditions and min, max temperature of a day.
 
 Pre-requisites
 --------------
